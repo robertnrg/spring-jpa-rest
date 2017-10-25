@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <statusListener class="ch.qos.logback.core.status.NopStatusListener"/>
+    <!-- Property's -->
+    <property name="log-path" value="logs"/>
+    <property name="log-pattern-console"
+              value="%d{yyyy-MM-dd HH:mm:ss.SSS} %-5p \\(%t\\) [%c\\(%M:%L\\)] - %m%n"/>
+    <property name="log-pattern-file"
+              value="%d{yyyy-MM-dd HH:mm:ss.SSS} %-5p \\(%t\\) [%c\\(%M:%L\\)] - %m%n"/>
+    <property name="output-file-name" value="${log-path}/spring-jpa-rest"/>
+    <property name="waf-file-name" value="${log-path}/spring-jpa-rest-waf"/>
+    <!-- Appender's -->
+    <appender name="ConsoleAppender" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>
+                ${log-pattern-console}
+            </pattern>
+        </encoder>
+    </appender>
+    <appender name="OutputFile"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <encoder>
+            <pattern>${log-pattern-file}</pattern>
+        </encoder>
+        <file>${output-file-name}.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- Hour rollover -->
+            <fileNamePattern>${output-file-name}.%d{yyyy-MM-dd-HH}.log.zip</fileNamePattern>
+            <maxHistory>6</maxHistory>
+        </rollingPolicy>
+    </appender>
+    <appender name="WafFile"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <encoder>
+            <pattern>${log-pattern-file}</pattern>
+        </encoder>
+        <file>${waf-file-name}.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- Hour rollover -->
+            <fileNamePattern>${waf-file-name}.%d{yyyy-MM-dd-HH}.log.zip</fileNamePattern>
+            <maxHistory>6</maxHistory>
+        </rollingPolicy>
+    </appender>
+    <!-- Profile's -->
+    <springProfile name="embedded">
+        <root level="INFO" additivity="false">
+            <appender-ref ref="ConsoleAppender"/>
+            <appender-ref ref="OutputFile"/>
+            <appender-ref ref="WafFile"/>
+        </root>
+        <logger name="org" level="INFO" additivity="false">
+            <appender-ref ref="ConsoleAppender"/>
+            <appender-ref ref="WafFile"/>
+        </logger>
+        <logger name="io" level="INFO" additivity="false">
+            <appender-ref ref="ConsoleAppender"/>
+            <appender-ref ref="WafFile"/>
+        </logger>
+        <logger name="com.sun" level="INFO" additivity="false">
+            <appender-ref ref="ConsoleAppender"/>
+            <appender-ref ref="WafFile"/>
+        </logger>
+        <logger name="com.robert.spring.jpa.rest" level="DEBUG" additivity="false">
+            <appender-ref ref="ConsoleAppender"/>
+            <appender-ref ref="OutputFile"/>
+        </logger>
+    </springProfile>
+    <springProfile name="executable">
+        <root level="INFO" additivity="false">
+            <appender-ref ref="OutputFile"/>
+            <appender-ref ref="WafFile"/>
+        </root>
+        <logger name="org" level="INFO" additivity="false">
+            <appender-ref ref="WafFile"/>
+        </logger>
+        <logger name="io" level="INFO" additivity="false">
+            <appender-ref ref="WafFile"/>
+        </logger>
+        <logger name="com.sun" level="INFO" additivity="false">
+            <appender-ref ref="WafFile"/>
+        </logger>
+        <logger name="com.robert.spring.jpa.rest" level="INFO" additivity="false">
+            <appender-ref ref="OutputFile"/>
+        </logger>
+    </springProfile>
+</configuration>

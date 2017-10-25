@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mappings xmlns="http://dozer.sourceforge.net"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://dozer.sourceforge.net http://dozer.sourceforge.net/schema/beanmapping.xsd">
+    <mapping map-id="userDTO" date-format="dd/MM/yyyy">
+        <class-a>com.robert.spring.jpa.rest.domain.User</class-a>
+        <class-b>com.robert.spring.jpa.rest.dto.UserDTO</class-b>
+        <field>
+            <a>person.name</a>
+            <b>name</b>
+        </field>
+        <field>
+            <a>person.lastName</a>
+            <b>lastName</b>
+        </field>
+        <field>
+            <a>person.secondLastName</a>
+            <b>secondLastName</b>
+        </field>
+        <field>
+            <a>person.email</a>
+            <b>email</b>
+        </field>
+        <field>
+            <a>person.dateOfBirth</a>
+            <b>dateOfBirth</b>
+        </field>
+        <field>
+            <a>person.gender</a>
+            <b>gender</b>
+        </field>
+    </mapping>
+    <mapping map-id="permissionDTO" date-format="dd/MM/yyyy">
+        <class-a>com.robert.spring.jpa.rest.domain.Permission</class-a>
+        <class-b>com.robert.spring.jpa.rest.dto.PermissionDTO</class-b>
+    </mapping>
+    <mapping map-id="statusDTO" date-format="dd/MM/yyyy">
+        <class-a>com.robert.spring.jpa.rest.domain.Status</class-a>
+        <class-b>com.robert.spring.jpa.rest.dto.StatusDTO</class-b>
+    </mapping>
+</mappings>
